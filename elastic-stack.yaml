@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andrei1394/learning-k8s.git   # <-- change me
+    targetRevision: main                                          # <-- change if your branch differs
+    path: k8s                                                     # <-- folder containing elasticsearch.yaml & kibana.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elastic-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
