@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-ebs-csi-driver
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: storage
+  source:
+    repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    chart: aws-ebs-csi-driver
+    targetRevision: "2.52.1"
+    helm:
+      values: |
+        controller:
+          serviceAccount:
+            create: true
+            name: aws-ebs-csi-driver   # matches your existing Pod Identity association
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true          # let Argo create the 'storage' namespace
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
