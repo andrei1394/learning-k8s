@@ -18,6 +18,12 @@ spec:
           serviceAccount:
             create: true
             name: aws-ebs-csi-driver   # matches your existing Pod Identity association
+    ignoreDifferences:
+      - group: storage.k8s.io
+        kind: CSIDriver
+        name: ebs.csi.aws.com
+        jsonPointers:
+          - /spec/nodeAllocatableUpdatePeriodSeconds
   syncPolicy:
     automated:
       prune: true
