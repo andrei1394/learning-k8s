@@ -10,7 +10,7 @@ spec:
       selfSignedCertificate: { disabled: false }
   nodeSets:
   - name: all-in-one
-    count: 1
+    count: 2
     config:
       node.roles: ["master","data_hot","ingest"]
       xpack.ml.enabled: false
@@ -26,9 +26,11 @@ spec:
             requests: { cpu: "500m", memory: "2Gi" }
             limits:   { cpu: "1",    memory: "2Gi" }
     volumeClaimTemplates:
-    - metadata: { name: elasticsearch-data }
+    - metadata:
+        name: elasticsearch-data
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: gp2
+        storageClassName: gp2        # <<— IMPORTANT
         resources:
-          requests: { storage: 20Gi }
+          requests:
+            storage: 20Gi
