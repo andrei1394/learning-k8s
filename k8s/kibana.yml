@@ -6,7 +6,12 @@ metadata:
 spec:
   version: 8.13.0
   count: 1
-  elasticsearchRef: { name: es-small }
+  elasticsearchRef:
+    name: es-small
   http:
+    service:
+      spec:
+        type: LoadBalancer              # <--- this line makes it public
     tls:
-      selfSignedCertificate: { disabled: false }
+      selfSignedCertificate:
+        disabled: false                 # enable HTTPS with self-signed cert
