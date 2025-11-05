@@ -12,7 +12,7 @@ spec:
   - name: all-in-one
     count: 2
     config:
-      node.roles: ["master","data_hot","ingest"]
+      node.roles: ["master","data_hot","ingest","data_content"]
       xpack.ml.enabled: false
       node.store.allow_mmap: false
     podTemplate:
